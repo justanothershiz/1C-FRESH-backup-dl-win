@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 # Extract data-dumps (XML-backups) from 1Cfresh.com cloud
-# Version : 2025-03-23 by Amin
+# Version : 2026-09-11 by Amin
 
 
 username="corp-1cfreshbackuper"
 password="MegaStrongAndGoodPassword4BackUP"
 
 oneassfresh_accound_id=100500
-cooldown_time=10                  # seconds for pause between download each backup - for API relax
+cooldown_time=20                  # seconds for pause between download each backup - for API relax
 
 server='https://1cfresh.com'
 
@@ -119,9 +119,10 @@ for dl in dbs:
     dlist_str = dlist_obj.read().decode('utf-8')     # req - read - decode
     # print(dlist_str)
     # Parse JSON
+    token = ''   # maybe EoL value
     try:
       djson_obj = json.loads(dlist_str)
-      token = djson_obj['token']
+      token = djson_obj['token'] if djson_obj['token'] else token
       url = djson_obj['url']
       error = djson_obj['general']['error']
       response = djson_obj['general']['response']
